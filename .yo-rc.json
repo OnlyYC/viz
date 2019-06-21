@@ -1,0 +1,40 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.liaoyb.viz",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "6.1.1",
+    "applicationType": "monolith",
+    "baseName": "viz",
+    "packageName": "com.liaoyb.viz",
+    "packageFolder": "com/liaoyb/viz",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MjkxOWIwMTdkNmY2NjM1NjcyYWY5YTlhNTU5MTAzNzhjNzEwZjY3ZTA0ZjI2MTQyNDBmMzhmYjBiNTNhYWU1OWY4MmQ1ZDRjMDAzZDlmYjgwYWJjYzM5ZTk2OTQxNjJmMzI1MmQzMzJmMGRiZWVhODhiMWE1YWM0YjBlZjU1YjI=",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "flatly",
+    "clientThemeVariant": "dark",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "zh-cn",
+    "languages": ["zh-cn"]
+  }
+}
