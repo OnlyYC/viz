@@ -327,6 +327,20 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+	    <dependency>
+		    <groupId>org.antlr</groupId>
+		    <artifactId>ST4</artifactId>
+		    <version>4.0.8</version>
+	    </dependency>
+	    <dependency>
+		    <groupId>com.github.jsqlparser</groupId>
+		    <artifactId>jsqlparser</artifactId>
+		    <version>1.2</version>
+	    </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 

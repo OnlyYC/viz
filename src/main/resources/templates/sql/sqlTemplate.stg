@@ -1,0 +1,66 @@
+
+querySqlByGroup(groups, aggregators, wheres, havings, orders, sql, columns, keywordPrefix, keywordSuffix, aliasPrefix, aliasSuffix)
+::=<<
+SELECT
+<if(groups)>
+ <groups:{group|<if(aliasPrefix && aliasSuffix)><group.column> <aliasPrefix><group.alias><aliasSuffix><else><group.column> <group.alias><endif>}; separator=",">
+<endif>
+<if(groups && aggregators)>,<endif>
+<if(aggregators)>
+ <aggregators:{agg|<if(aliasPrefix && aliasSuffix)><agg.column> <aliasPrefix><agg.alias><aliasSuffix><else><agg.column> <agg.alias><endif>}; separator=",">
+<endif>
+FROM <sql> T
+<if(wheres)>
+WHERE <wheres>
+<endif>
+<if(groups)>
+GROUP BY <groups:{group|<group.column>}; separator=",">
+<endif>
+<if(havings)>
+HAVING <havings>
+<endif>
+<if(orders)>
+ORDER BY <orders:{order|<if(order)><order.column> <order.direction><endif>}; separator=",">
+<endif>
+>>
+
+
+querySqlSimple(groups, aggregators, wheres, havings, orders, sql, columns, keywordPrefix, keywordSuffix, aliasPrefix, aliasSuffix)
+::=<<
+<if(columns)>
+SELECT
+<columns:{column|<if(aliasPrefix && aliasSuffix)><column.column> <aliasPrefix><column.alias><aliasSuffix><else><column.column> <column.alias><endif>}; separator=",">
+<else>
+SELECT
+ *
+<endif>
+FROM <sql> T
+<if(wheres)>
+WHERE <wheres>
+<endif>
+<if(havings)>
+HAVING <havings>
+<endif>
+<if(orders)>
+ORDER BY <orders:{order|<if(order)><order.column> <order.direction><endif>}; separator=",">
+<endif>
+>>
+
+querySqlWithTableName(groups, aggregators, wheres, havings, orders, tableName, columns, keywordPrefix, keywordSuffix, aliasPrefix, aliasSuffix)
+::=<<
+<if(columns)>
+SELECT
+<columns:{column|<if(aliasPrefix && aliasSuffix)><column.column> <aliasPrefix><column.alias><aliasSuffix><else><column.column> <column.alias><endif>}; separator=",">
+<else>
+SELECT *
+<endif>
+
+FROM <tableName>
+<if(wheres)>
+WHERE <wheres>
+<endif>
+
+<if(orders)>
+ORDER BY <orders:{order|<if(order)><order.column> <order.direction><endif>}; separator=",">
+<endif>
+>>

@@ -2,6 +2,7 @@ package com.liaoyb.viz.security;
 
 import com.liaoyb.viz.domain.User;
 import com.liaoyb.viz.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,11 @@ import java.util.stream.Collectors;
 /**
  * Authenticate a user from the database.
  */
+@Slf4j
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
 
-    private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
+//    private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
 
@@ -34,6 +36,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
+        log.info("geageagega");
 
         if (new EmailValidator().isValid(login, null)) {
             return userRepository.findOneWithAuthoritiesByEmail(login)
