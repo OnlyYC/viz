@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.errors;
 /**
  * 不支持
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class NotImplementedException extends RuntimeException {
     public NotImplementedException(String message) {

@@ -1,6 +1,7 @@
 package com.liaoyb.viz.engine.enums;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.errors.NotImplementedException;
 
 import java.util.Arrays;
@@ -175,8 +176,8 @@ public enum AggregationFunctionEnum {
     public static AggregationFunctionEnum getFunction(String fun, DatabaseTypeEnum databaseType, MetadataColumnTypeEnum columnTypeEnum) {
         for (AggregationFunctionEnum conversionEnum : AggregationFunctionEnum.values()) {
             if (Objects.equals(conversionEnum.getFun(), fun)
-                    && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
-                    && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
+                && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
+                && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
                 return conversionEnum;
             }
         }

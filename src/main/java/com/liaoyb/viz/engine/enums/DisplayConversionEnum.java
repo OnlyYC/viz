@@ -1,6 +1,7 @@
 package com.liaoyb.viz.engine.enums;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.errors.NotImplementedException;
 
 import java.util.List;
@@ -160,8 +161,8 @@ public enum DisplayConversionEnum {
     public static DisplayConversionEnum getDisplayConversion(String conversion, DatabaseTypeEnum databaseType, MetadataColumnTypeEnum columnTypeEnum) {
         for (DisplayConversionEnum conversionEnum : DisplayConversionEnum.values()) {
             if (conversionEnum.getConversions().contains(conversion)
-                    && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
-                    && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
+                && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
+                && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
                 return conversionEnum;
             }
         }

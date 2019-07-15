@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.sql.jdbc;
 import com.liaoyb.viz.engine.enums.DatabaseTypeEnum;
 import com.liaoyb.viz.engine.errors.SourceException;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * jdbc数据源

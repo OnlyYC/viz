@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.errors;
 /**
  * sql解析异常
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class SqlParseException extends RuntimeException {
     public SqlParseException(String message) {

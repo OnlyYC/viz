@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.config;
 /**
  * 常量配置
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class Consts {
     /**
@@ -25,7 +25,17 @@ public class Consts {
 
     public static final char DOLLAR_DELIMITER = '$';
 
+    public static final String ADD = "and";
+    public static final String OR = "or";
 
+    /**
+     * 升序
+     */
+    public static final String DIRECTION_ASC = "asc";
+    /**
+     * 降序
+     */
+    public static final String DIRECTION_DESC = "desc";
 
     /**
      * 敏感sql操作

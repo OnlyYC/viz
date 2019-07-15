@@ -3,18 +3,22 @@ package com.liaoyb.viz.engine.util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+
 import com.liaoyb.viz.engine.config.Consts;
 import com.liaoyb.viz.engine.errors.SqlParseException;
-import lombok.extern.slf4j.Slf4j;
+
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.select.Select;
+
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * sql解析工具

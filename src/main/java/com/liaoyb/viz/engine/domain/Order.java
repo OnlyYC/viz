@@ -1,12 +1,12 @@
 package com.liaoyb.viz.engine.domain;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import lombok.Data;
+
 /**
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
 public class Order {

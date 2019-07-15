@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.errors;
 /**
  * 不支持异常
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class NotSupportException extends RuntimeException {
     public NotSupportException(String message) {

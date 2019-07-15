@@ -1,6 +1,7 @@
 package com.liaoyb.viz.config;
 
-import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -14,6 +15,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 
 @Configuration
 @EnableAsync
@@ -43,5 +50,17 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return new SimpleAsyncUncaughtExceptionHandler();
+    }
+
+    /**
+     * 捕捉异常线程池
+     *
+     * @return 线程池执行器
+     */
+    @Bean(name = "catchableThreadPoolExecutor")
+    public ThreadPoolExecutor catchable() {
+        Thread.UncaughtExceptionHandler uncaughtExceptionHandler = (t, e) -> log.error("线程池执行异常", e);
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("线程池-%d").setUncaughtExceptionHandler(uncaughtExceptionHandler).build();
+        return new ThreadPoolExecutor(20, 20, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
     }
 }

@@ -1,6 +1,7 @@
 package com.liaoyb.viz.engine.util;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.config.Consts;
 import com.liaoyb.viz.engine.domain.Aggregator;
 import com.liaoyb.viz.engine.domain.Column;
@@ -18,7 +19,7 @@ import com.liaoyb.viz.engine.enums.GroupConversionEnum;
 import com.liaoyb.viz.engine.enums.MetadataColumnTypeEnum;
 import com.liaoyb.viz.engine.enums.QueryParamRelationTypeEnum;
 import com.liaoyb.viz.engine.enums.SqlFilterFunctionEnum;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -27,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * sql处理扩展

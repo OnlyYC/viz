@@ -1,5 +1,7 @@
 package com.liaoyb.viz.engine.enums;
 
+import com.google.common.collect.Lists;
+
 import java.util.Objects;
 
 /**
@@ -38,6 +40,16 @@ public enum SourceTypeEnum {
             }
         }
         return null;
+    }
+
+    /**
+     * 是否是jdbc类型数据源
+     *
+     * @param sourceTypeEnum 数据源
+     * @return 是否是jdbc类型数据源
+     */
+    public static boolean isJdbcType(SourceTypeEnum sourceTypeEnum) {
+        return Lists.newArrayList(SourceTypeEnum.MYSQL, SourceTypeEnum.LIGHTNING).contains(sourceTypeEnum);
     }
 
     public String getValue() {

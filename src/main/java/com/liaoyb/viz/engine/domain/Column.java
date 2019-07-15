@@ -2,13 +2,14 @@ package com.liaoyb.viz.engine.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liaoyb.viz.engine.enums.MetadataColumnTypeEnum;
-import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+
 /**
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
 public class Column {

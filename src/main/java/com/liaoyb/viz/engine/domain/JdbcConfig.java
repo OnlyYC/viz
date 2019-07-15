@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * jdbc连接信息
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Builder
 @Data

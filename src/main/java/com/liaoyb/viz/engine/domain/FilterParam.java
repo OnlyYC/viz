@@ -1,16 +1,18 @@
 package com.liaoyb.viz.engine.domain;
 
 import com.liaoyb.viz.engine.enums.MetadataColumnTypeEnum;
-import lombok.Data;
+
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+
+import lombok.Data;
 
 /**
  * 过滤参数
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
 public class FilterParam {

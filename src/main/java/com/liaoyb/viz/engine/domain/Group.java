@@ -2,23 +2,25 @@ package com.liaoyb.viz.engine.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liaoyb.viz.engine.enums.MetadataColumnTypeEnum;
-import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.Data;
+
 /**
- * 分组
+ * 分组(column or 表达式)
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
 public class Group {
     /**
-     * 分组列
+     * 分组列（可以是表达式列(已经生成好的sql表达式)）
      */
     @NotBlank(message = "分组列名不能为空")
     private String column;
+
     /**
      * 别名
      */
@@ -34,4 +36,5 @@ public class Group {
      */
     @NotNull(message = "列类型不能为空")
     private MetadataColumnTypeEnum columnTypeEnum;
+
 }

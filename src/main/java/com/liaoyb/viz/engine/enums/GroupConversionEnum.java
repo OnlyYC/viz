@@ -1,10 +1,12 @@
 package com.liaoyb.viz.engine.enums;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.errors.NotImplementedException;
-import io.jsonwebtoken.lang.Assert;
 
 import java.util.List;
+
+import io.jsonwebtoken.lang.Assert;
 
 /**
  * 分组转换枚举
@@ -163,8 +165,8 @@ public enum GroupConversionEnum {
     public static GroupConversionEnum getGroupConversion(String conversion, DatabaseTypeEnum databaseType, MetadataColumnTypeEnum columnTypeEnum) {
         for (GroupConversionEnum conversionEnum : GroupConversionEnum.values()) {
             if (conversionEnum.getConversions().contains(conversion)
-                    && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
-                    && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
+                && conversionEnum.getDatabaseTypeEnums().contains(databaseType)
+                && conversionEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
                 return conversionEnum;
             }
         }

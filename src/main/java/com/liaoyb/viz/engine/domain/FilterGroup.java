@@ -1,16 +1,17 @@
 package com.liaoyb.viz.engine.domain;
 
-import lombok.Data;
+import java.util.List;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.List;
+
+import lombok.Data;
 
 /**
  * 过滤组
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
 public class FilterGroup {

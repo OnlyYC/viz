@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 日期工具
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class DateUtils {
     public static Date toDate(Timestamp timestamp) {

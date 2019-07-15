@@ -1,4 +1,4 @@
-package com.liaoyb.viz.engine.domain;
+package com.liaoyb.viz.engine.queryadapter.expert_perform_query;
 
 import com.liaoyb.viz.engine.enums.MetadataColumnTypeEnum;
 
@@ -7,12 +7,11 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 /**
- * 聚合
- *
  * @author liaoyanbo
+ * @date 2019-07-08 17:40
  */
 @Data
-public class Aggregator {
+public class Aggregation {
     /**
      * 可以是原始列、表达式列
      */
@@ -30,6 +29,7 @@ public class Aggregator {
 
 
     //todo 可以对自定义列聚合表达式，如（sum(id)+count(geg)）
+    private String aggregationExpression;
 
 
     /**

@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.util;
 /**
  * sql工具
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public class SqlUtils {
 

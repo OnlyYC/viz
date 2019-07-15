@@ -3,7 +3,7 @@ package com.liaoyb.viz.engine.enums;
 import java.util.Objects;
 
 /**
- * @author liaoyb
+ * @author liaoyanbo
  */
 public enum MetadataColumnTypeEnum {
     /**

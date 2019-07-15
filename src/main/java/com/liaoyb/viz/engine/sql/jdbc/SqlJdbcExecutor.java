@@ -2,22 +2,19 @@ package com.liaoyb.viz.engine.sql.jdbc;
 
 import com.liaoyb.viz.engine.config.Consts;
 import com.liaoyb.viz.engine.domain.QueryColumn;
+import com.liaoyb.viz.engine.domain.QueryResult;
 import com.liaoyb.viz.engine.enums.DatabaseTypeEnum;
 import com.liaoyb.viz.engine.enums.TypeEnum;
 import com.liaoyb.viz.engine.errors.DataHandlerException;
 import com.liaoyb.viz.engine.errors.SourceException;
 import com.liaoyb.viz.engine.errors.SqlExecutionException;
-import com.liaoyb.viz.engine.source.AbstractJdbcSource;
+import com.liaoyb.viz.engine.source.AbstractJdbcDataSource;
 import com.liaoyb.viz.engine.util.SqlUtils;
-import com.liaoyb.viz.security.DomainUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -29,6 +26,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.sql.DataSource;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * sql执行器
@@ -63,7 +64,7 @@ public class SqlJdbcExecutor {
      */
     private static Pattern SENSITIVE_SQL_PATTERN = Pattern.compile(Consts.REG_SENSITIVE_SQL);
 
-    public void execute(AbstractJdbcSource source, String sql) throws DataHandlerException {
+    public void execute(AbstractJdbcDataSource source, String sql) throws DataHandlerException {
         checkSensitiveSql(sql);
         long startTime = System.nanoTime();
         try {
@@ -72,7 +73,7 @@ public class SqlJdbcExecutor {
             log.info("【{}ms】execute sql:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
         } catch (Exception e) {
             long estimatedTime = System.nanoTime() - startTime;
-            log.error("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
+            log.info("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
             throw new DataHandlerException(e.getMessage());
         }
     }
@@ -83,7 +84,7 @@ public class SqlJdbcExecutor {
      * @param sql   sql
      * @param clazz 类型
      */
-    public <T> T queryForObject(AbstractJdbcSource source, String sql, Class<T> clazz) {
+    public <T> T queryForObject(AbstractJdbcDataSource source, String sql, Class<T> clazz) {
         checkSensitiveSql(sql);
         sql = SqlUtils.formatSql(sql);
         long startTime = System.nanoTime();
@@ -94,7 +95,7 @@ public class SqlJdbcExecutor {
             return result;
         } catch (Exception e) {
             long estimatedTime = System.nanoTime() - startTime;
-            log.error("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
+            log.info("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
             throw new SqlExecutionException(e.getMessage());
         }
     }
@@ -106,7 +107,7 @@ public class SqlJdbcExecutor {
      * @param limit 限制条数
      * @return 集合数据
      */
-    public List<Map<String, Object>> query4List(AbstractJdbcSource source, String sql, int limit) {
+    public List<Map<String, Object>> query4List(AbstractJdbcDataSource source, String sql, int limit) {
         checkSensitiveSql(sql);
         sql = SqlUtils.formatSql(sql);
         List<Map<String, Object>> list = null;
@@ -119,18 +120,41 @@ public class SqlJdbcExecutor {
             log.info("【{}ms】execute sql:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
         } catch (Exception e) {
             long estimatedTime = System.nanoTime() - startTime;
-            log.error("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
+            log.info("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, sql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
             throw new SqlExecutionException(e.getMessage());
         }
         return list;
     }
 
     /**
+     * 获取结果
+     */
+    public QueryResult<Map<String, Object>> query4Result(AbstractJdbcDataSource source, final String sql) {
+        checkSensitiveSql(sql);
+        String targetSql = SqlUtils.formatSql(sql);
+        QueryResult<Map<String, Object>> queryResult = null;
+        long startTime = System.nanoTime();
+        try {
+            JdbcTemplate jdbcTemplate = jdbcTemplate(source);
+            jdbcTemplate.setMaxRows(-1);
+            queryResult = jdbcTemplate.query(targetSql, new QueryResultSetExtractor<>(new DateColumnMapRowMapper()));
+            long estimatedTime = System.nanoTime() - startTime;
+            log.info("【{}ms】execute sql:[{}] in {}:{}", estimatedTime / 1000000, targetSql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
+        } catch (Exception e) {
+            long estimatedTime = System.nanoTime() - startTime;
+            log.info("【{}ms】execute sql error:[{}] in {}:{}", estimatedTime / 1000000, targetSql, source.getJdbcConfig().getUsername(), source.getJdbcConfig().getUrl());
+            throw new SqlExecutionException(e.getMessage());
+        }
+        return queryResult;
+    }
+
+
+    /**
      * 查询返回集合列表
      *
      * @param sql sql
      */
-    public List<Map<String, Object>> syncQuery4List(AbstractJdbcSource source, String sql) {
+    public List<Map<String, Object>> syncQuery4List(AbstractJdbcDataSource source, String sql) {
         List<Map<String, Object>> list = query4List(source, sql, -1);
         return list;
     }
@@ -140,7 +164,7 @@ public class SqlJdbcExecutor {
      *
      * @param sql sql
      */
-    public Map<String, Object> query4Map(AbstractJdbcSource source, String sql) {
+    public Map<String, Object> query4Map(AbstractJdbcDataSource source, String sql) {
         checkSensitiveSql(sql);
         Map<String, Object> map = null;
         try {
@@ -155,7 +179,7 @@ public class SqlJdbcExecutor {
     /**
      * 判断表是否存在
      */
-    public boolean tableIsExist(AbstractJdbcSource source, String tableName) throws SourceException {
+    public boolean tableIsExist(AbstractJdbcDataSource source, String tableName) throws SourceException {
         boolean result = false;
         Connection connection = null;
         try {
@@ -181,7 +205,7 @@ public class SqlJdbcExecutor {
     /**
      * 根据sql查询列
      */
-    public List<QueryColumn> getColumns(AbstractJdbcSource source, String sql) throws DataHandlerException {
+    public List<QueryColumn> getColumns(AbstractJdbcDataSource source, String sql) throws DataHandlerException {
         checkSensitiveSql(sql);
         Connection connection = null;
         List<QueryColumn> columnList = new ArrayList<>();
@@ -195,8 +219,8 @@ public class SqlJdbcExecutor {
                 for (int i = 1; i <= columnCount; i++) {
                     String columnType = TypeEnum.getType(rsmd.getColumnType(i));
                     QueryColumn queryColumn = new QueryColumn(
-                            rsmd.getColumnLabel(i),
-                            columnType, columnType, null);
+                        rsmd.getColumnLabel(i),
+                        columnType, columnType, null);
                     columnList.add(queryColumn);
                 }
                 resultSet.close();
@@ -213,7 +237,7 @@ public class SqlJdbcExecutor {
     /**
      * 根据表名获取表元数据
      */
-    public List<QueryColumn> getColumnsByTableName(AbstractJdbcSource source, String tableName) throws DataHandlerException {
+    public List<QueryColumn> getColumnsByTableName(AbstractJdbcDataSource source, String tableName) throws DataHandlerException {
         Connection connection = null;
         List<QueryColumn> columnList = new ArrayList<>();
         try {
@@ -234,7 +258,7 @@ public class SqlJdbcExecutor {
     /**
      * 获取数据表主键
      */
-    private List<String> getPrimaryKeys(AbstractJdbcSource source, String tableName, DatabaseMetaData metaData) throws DataHandlerException {
+    private List<String> getPrimaryKeys(AbstractJdbcDataSource source, String tableName, DatabaseMetaData metaData) throws DataHandlerException {
         ResultSet rs = null;
         List<String> primaryKeys = new ArrayList<>();
         try {
@@ -293,7 +317,7 @@ public class SqlJdbcExecutor {
         }
     }
 
-    private Connection getConnection(AbstractJdbcSource source) throws SourceException {
+    private Connection getConnection(AbstractJdbcDataSource source) throws SourceException {
         DataSource dataSource = getDataSource(source.getDatabaseTypeEnum(), source.getJdbcConfig().getUrl(), source.getJdbcConfig().getUsername(), source.getJdbcConfig().getPassword());
         Connection connection = null;
         try {
@@ -328,7 +352,7 @@ public class SqlJdbcExecutor {
         }
     }
 
-    public boolean testConnection(AbstractJdbcSource source) throws SourceException {
+    public boolean testConnection(AbstractJdbcDataSource source) throws SourceException {
         Connection connection = null;
         try {
             connection = getConnection(source);
@@ -344,7 +368,7 @@ public class SqlJdbcExecutor {
         }
     }
 
-    public JdbcTemplate jdbcTemplate(AbstractJdbcSource source) throws SourceException {
+    public JdbcTemplate jdbcTemplate(AbstractJdbcDataSource source) throws SourceException {
         DataSource dataSource = getDataSource(source.getDatabaseTypeEnum(), source.getJdbcConfig().getUrl(), source.getJdbcConfig().getUsername(), source.getJdbcConfig().getPassword());
         return new JdbcTemplate(dataSource);
     }

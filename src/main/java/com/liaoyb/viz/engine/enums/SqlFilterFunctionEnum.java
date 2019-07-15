@@ -1,16 +1,19 @@
 package com.liaoyb.viz.engine.enums;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.config.Consts;
 import com.liaoyb.viz.engine.errors.NotImplementedException;
 import com.liaoyb.viz.engine.util.SqlParseUtils;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 过滤函数枚举
@@ -275,9 +278,9 @@ public enum SqlFilterFunctionEnum {
         }
         StringBuilder expBuilder = new StringBuilder();
         expBuilder
-                .append(name).append(Consts.SPACE)
-                .append(operator).append(Consts.SPACE)
-                .append(values.stream().map(str -> String.format("'%s'", str)).collect(Collectors.joining(",", "(", ")")));
+            .append(name).append(Consts.SPACE)
+            .append(operator).append(Consts.SPACE)
+            .append(values.stream().map(str -> String.format("'%s'", str)).collect(Collectors.joining(",", "(", ")")));
         return expBuilder.toString();
     }
 
@@ -295,9 +298,9 @@ public enum SqlFilterFunctionEnum {
         }
         StringBuilder expBuilder = new StringBuilder();
         expBuilder
-                .append(name).append(Consts.SPACE)
-                .append(operator).append(Consts.SPACE)
-                .append(values.stream().map(str -> String.format("'%s'", str)).collect(Collectors.joining(",", "(", ")")));
+            .append(name).append(Consts.SPACE)
+            .append(operator).append(Consts.SPACE)
+            .append(values.stream().map(str -> String.format("'%s'", str)).collect(Collectors.joining(",", "(", ")")));
         return expBuilder.toString();
     }
 
@@ -322,8 +325,8 @@ public enum SqlFilterFunctionEnum {
     public static SqlFilterFunctionEnum getOperation(String operator, DatabaseTypeEnum databaseType, MetadataColumnTypeEnum columnTypeEnum) {
         for (SqlFilterFunctionEnum operatorEnum : SqlFilterFunctionEnum.values()) {
             if (Objects.equals(operatorEnum.getOperator(), operator)
-                    && operatorEnum.getDatabaseTypeEnums().contains(databaseType)
-                    && operatorEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
+                && operatorEnum.getDatabaseTypeEnums().contains(databaseType)
+                && operatorEnum.getColumnTypeEnums().contains(columnTypeEnum)) {
                 return operatorEnum;
             }
         }

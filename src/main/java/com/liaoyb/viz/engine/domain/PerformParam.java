@@ -1,18 +1,18 @@
 package com.liaoyb.viz.engine.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import java.util.List;
 
 import javax.validation.Valid;
-import java.util.List;
+
+import lombok.Data;
 
 /**
  * 执行参数
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 @Data
-public class PerformParam {
+public class PerformParam implements QueryParam<PerformQueryResult> {
     /**
      * 分组
      */
@@ -50,13 +50,7 @@ public class PerformParam {
     private String rowAuthExpression;
 
     /**
-     * 每页条数
+     * 条数限制（-1无限制）
      */
-    @JsonProperty("per_page")
-    private Integer pageSize;
-    /**
-     * 当前页
-     */
-    @JsonProperty("current_page")
-    private Integer curPage;
+    private Integer limit;
 }

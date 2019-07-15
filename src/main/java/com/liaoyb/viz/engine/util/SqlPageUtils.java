@@ -1,8 +1,10 @@
 package com.liaoyb.viz.engine.util;
 
 import com.google.common.collect.Lists;
+
 import com.liaoyb.viz.engine.enums.DatabaseTypeEnum;
 import com.liaoyb.viz.engine.errors.SqlParseException;
+
 import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.statement.select.PlainSelect;
@@ -14,7 +16,7 @@ import java.util.List;
 /**
  * sql 分页工具
  *
- * @author liaoyb
+ * @author liaoyanbo
  */
 public enum SqlPageUtils {
     /**
